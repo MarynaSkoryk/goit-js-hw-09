@@ -13,15 +13,23 @@ refs.startBtn.addEventListener('click', onStartClick);
 refs.stopBtn.addEventListener('click', onStopClick);
 
 function onStartClick() {
-  refs.startBtn.disabled = true;
-  refs.stopBtn.disabled = false;
+  onStartBtnDisabled();
   intervalID = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
 }
 
 function onStopClick() {
+  onStopBtnDisabled();
   clearInterval(intervalID);
+}
+
+function onStartBtnDisabled() {
+  refs.startBtn.disabled = true;
+  refs.stopBtn.disabled = false;
+}
+
+function onStopBtnDisabled() {
   refs.startBtn.disabled = false;
   refs.stopBtn.disabled = true;
 }

@@ -19,13 +19,18 @@ let intervalId = null;
 const options = {
   enableTime: true,
   time_24hr: true,
-  defaultDate: new Date(),
+  // defaultDate: new Date(),
+  defaultDate: Date.now(),
   minuteIncrement: 1,
   onClose(selectedDates) {
     setTime = selectedDates[0];
     currentTime = Date.now;
 
-    if (options.defaultDate.getTime() > selectedDates[0].getTime()) {
+    // if (options.defaultDate.getTime() > selectedDates[0].getTime()) {
+    //   Notify.failure('Please chose a date in the future');
+    //   return;
+    // }
+    if (options.defaultDate > selectedDates[0].getTime()) {
       Notify.failure('Please chose a date in the future');
       return;
     }
@@ -63,11 +68,7 @@ function onStartClick() {
   intervalId = setInterval(() => {
     currentTime = Date.now();
     ms = setTime - currentTime;
-    let time = convertMs(ms);
-    refs.daysEl.textContent = time.days;
-    refs.hoursEl.textContent = time.hours;
-    refs.minutesEl.textContent = time.minutes;
-    refs.secondsEl.textContent = time.seconds;
+    onTextContent();
     if (ms < 1000) {
       clearInterval(intervalId);
     }
@@ -76,4 +77,12 @@ function onStartClick() {
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
+}
+
+function onTextContent() {
+  let time = convertMs(ms);
+  refs.daysEl.textContent = time.days;
+  refs.hoursEl.textContent = time.hours;
+  refs.minutesEl.textContent = time.minutes;
+  refs.secondsEl.textContent = time.seconds;
 }
